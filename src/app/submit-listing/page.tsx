@@ -1,6 +1,5 @@
 import { api, HydrateClient } from "~/trpc/server";
-import Listings from "./_components/listings";
-export default async function Home() {
+export default async function SubmitListing() {
   const hello = await api.post.hello({ text: "from tRPC" });
 
   void api.listings.getAll.prefetch();
@@ -14,9 +13,7 @@ export default async function Home() {
               Boost Your App&apos;s Reach! - Submit Now and Get Noticed 🚀
             </h1>
           </div>
-          <div className="flex w-full flex-row flex-wrap gap-8">
-            <Listings />
-          </div>
+          <div className="flex w-full flex-row flex-wrap gap-8"></div>
         </div>
       </main>
     </HydrateClient>
