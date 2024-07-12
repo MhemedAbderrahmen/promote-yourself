@@ -1,7 +1,10 @@
+"use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 
 export const AddListing: React.FC = () => {
+  const router = useRouter();
   return (
     <div className="flex min-h-80 w-full flex-col space-y-2 rounded-sm border p-2 sm:w-56">
       <Image
@@ -20,7 +23,9 @@ export const AddListing: React.FC = () => {
       <p className="leading-7 [&:not(:first-child)]:mt-6">
         Click to add your new listing and boost your reach
       </p>
-      <Button size={"sm"}>Add</Button>
+      <Button size={"sm"} onClick={() => router.push("/submit-listing")}>
+        Add
+      </Button>
     </div>
   );
 };
