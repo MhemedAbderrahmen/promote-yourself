@@ -6,7 +6,7 @@
 - [x] Deploy app
 - [x] Setup db
 - [x] Setup Shadcn
-- [] UploadThing initialisation
+- [x] UploadThing initialisation
 - [] Prepare the mock data for businesses data
 - [] Scaffold basic UI and layout
 - [] Setup db schema for mock data

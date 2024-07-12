@@ -1,8 +1,7 @@
-import Link from "next/link";
-
-import { LatestPost } from "~/app/_components/post";
 import { ModeToggle } from "~/components/mode-toggle";
+import { UploadButton } from "~/lib/utils/uploadthing";
 import { api, HydrateClient } from "~/trpc/server";
+import Uploader from "./_components/uploader";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -16,6 +15,7 @@ export default async function Home() {
           Taxing Laughter: The Joke Tax Chronicles
         </h1>
         <ModeToggle />
+        <Uploader />
       </main>
     </HydrateClient>
   );
