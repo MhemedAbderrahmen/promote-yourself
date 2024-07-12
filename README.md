@@ -9,7 +9,7 @@
 - [x] UploadThing initialisation
 - [x] Scaffold basic UI and layout
 - [x] Prepare the mock data for apps listing
-- [] Setup db schema for mock data
+- [x] Setup db schema for mock data
 - [] CRUD for mock data
 - [] Forms and data validation
 - [] Image Upload with uploadthing
