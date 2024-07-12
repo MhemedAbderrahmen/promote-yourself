@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 
 const Listings: React.FC = () => {
@@ -9,7 +10,7 @@ const Listings: React.FC = () => {
     <a
       key={key}
       href={listing.path ?? ""}
-      className="flex w-full flex-col space-y-2 sm:w-48"
+      className="flex w-full flex-col space-y-2 sm:w-56"
     >
       <Image
         className="rounded-md"
@@ -25,7 +26,7 @@ const Listings: React.FC = () => {
       <p className="leading-7 [&:not(:first-child)]:mt-6">
         {listing.description}
       </p>
-      <p className="text-sm"></p>
+      <Button size={"sm"}>View More</Button>
     </a>
   ));
 };
