@@ -3,9 +3,9 @@
 # TODO:
 
 - [x] Repo setup
-- [] Deploy app
-- [] Setup db
-- [] Setup Shadcn
+- [x] Deploy app
+- [x] Setup db
+- [x] Setup Shadcn
 - [] UploadThing initialisation
 - [] Prepare the mock data for businesses data
 - [] Scaffold basic UI and layout
