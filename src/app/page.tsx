@@ -1,21 +1,25 @@
+import { MegaphoneIcon } from "lucide-react";
 import { ModeToggle } from "~/components/mode-toggle";
-import { UploadButton } from "~/lib/utils/uploadthing";
-import { api, HydrateClient } from "~/trpc/server";
-import Uploader from "./_components/uploader";
+import { HydrateClient } from "~/trpc/server";
+
+export function TopNav() {
+  return (
+    <nav className="flex w-full flex-row items-center justify-between border-b-2 p-4">
+      <h3 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl">
+        promotething
+      </h3>
+      <div>
+        <ModeToggle />
+      </div>
+    </nav>
+  );
+}
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
-
-  void api.post.getLatest.prefetch();
-
   return (
     <HydrateClient>
-      <main className="flex h-full w-full items-center justify-between p-24">
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Taxing Laughter: The Joke Tax Chronicles
-        </h1>
-        <ModeToggle />
-        <Uploader />
+      <main className="flex h-full w-full items-center justify-between">
+        <TopNav />
       </main>
     </HydrateClient>
   );
