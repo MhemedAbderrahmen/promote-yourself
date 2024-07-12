@@ -11,11 +11,10 @@ export const listingsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(listings).values({
         name: input.name,
-        logo:input.logo,
-        description:input.description
+        logo: input.logo,
+        description: input.description,
       });
     }),
-
 
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.db.query.listings.findMany({

@@ -1,7 +1,8 @@
 "use client";
-import { UploadButton } from "~/lib/utils/uploadthing";
 
-const Uploader: React.FC = () => {
+import { UploadButton } from "~/utils/uploadthing";
+
+export default function Uploader() {
   return (
     <UploadButton
       endpoint="imageUploader"
@@ -16,6 +17,4 @@ const Uploader: React.FC = () => {
       }}
     />
   );
-};
-
-export default Uploader;
+}
