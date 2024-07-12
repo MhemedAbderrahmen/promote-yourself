@@ -7,8 +7,8 @@
 - [x] Setup db
 - [x] Setup Shadcn
 - [x] UploadThing initialisation
-- [] Scaffold basic UI and layout
-- [] Prepare the mock data for businesses data
+- [x] Scaffold basic UI and layout
+- [x] Prepare the mock data for apps listing
 - [] Setup db schema for mock data
 - [] CRUD for mock data
 - [] Forms and data validation
