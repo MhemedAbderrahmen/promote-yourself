@@ -2,7 +2,7 @@
 
 # TODO:
 
-- [] Repo setup
+- [x] Repo setup
 - [] Deploy app
 - [] Setup db
 - [] Setup Shadcn
