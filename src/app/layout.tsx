@@ -3,13 +3,13 @@ import "~/styles/globals.css";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { type Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-
-import { TRPCReactProvider } from "~/trpc/react";
+import { Toaster } from "sonner";
+import { extractRouterConfig } from "uploadthing/server";
 import { ThemeProvider } from "~/components/theme-provider";
 import { cn } from "~/lib/utils";
-import { extractRouterConfig } from "uploadthing/server";
-import { ourFileRouter } from "./api/uploadthing/core";
+import { TRPCReactProvider } from "~/trpc/react";
 import TopNav from "./_components/top-nav";
+import { ourFileRouter } from "./api/uploadthing/core";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -44,6 +44,7 @@ export default function RootLayout({
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             <TopNav />
             {children}
+            <Toaster />
           </ThemeProvider>
         </TRPCReactProvider>
       </body>

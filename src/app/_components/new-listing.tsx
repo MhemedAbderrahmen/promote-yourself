@@ -2,8 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "~/components/ui/button";
@@ -18,7 +21,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-import { UploadDropzone } from "~/utils/uploadthing";
+import { UploadButton } from "~/utils/uploadthing";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -28,7 +31,7 @@ const formSchema = z.object({
 
 export default function NewListing() {
   const router = useRouter();
-
+  const [logoExist, setLogoExist] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -94,18 +97,41 @@ export default function NewListing() {
                 </FormItem>
               )}
             />
-            <UploadDropzone
-              className="dark:border-muted"
-              endpoint="imageUploader"
-              onClientUploadComplete={(res) => {
-                console.log("🚀 ~ onClientUploadComplete ~ res:", res);
-                if (res[0]?.url) form.setValue("logo", res[0]?.url);
-              }}
-              onUploadError={(error: Error) => {
-                // Do something with the error.
-                alert(`ERROR! ${error.message}`);
-              }}
-            />
+            <div
+              className={
+                "flex w-full flex-col items-center justify-center space-y-4"
+              }
+            >
+              {logoExist && (
+                <Image
+                  className="rounded-md"
+                  src={form.getValues("logo")}
+                  width={380}
+                  height={380}
+                  alt="icon"
+                />
+              )}
+              <UploadButton
+                className="dark:border-muted"
+                endpoint="imageUploader"
+                onUploadBegin={() =>
+                  toast("Uploading..", {
+                    id: "upload-begin",
+                  })
+                }
+                onClientUploadComplete={(res) => {
+                  if (res[0]?.url) form.setValue("logo", res[0]?.url);
+                  toast.dismiss("upload-begin");
+                  toast("Upload successfully.", {
+                    duration: 1000,
+                  });
+                  setLogoExist(true);
+                }}
+                onUploadError={(error: Error) => {
+                  alert(`ERROR! ${error.message}`);
+                }}
+              />
+            </div>
             <div className="flex w-full justify-center sm:justify-end">
               <Button type="submit" className="w-full md:w-auto">
                 Submit
