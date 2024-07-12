@@ -8,8 +8,8 @@ export default async function Home() {
   return (
     <HydrateClient>
       <TopNav />
-      <main className="max-w-screen-l flex h-full w-full items-center justify-center">
-        <div className="mt-8 flex w-full flex-row flex-wrap items-center justify-center gap-4">
+      <main className="flex w-full flex-row items-center justify-center">
+        <div className="flex w-full max-w-screen-lg flex-row flex-wrap gap-2 p-4">
           <Listings />
         </div>
       </main>
