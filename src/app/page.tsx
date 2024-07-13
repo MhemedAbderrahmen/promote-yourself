@@ -31,8 +31,8 @@ export default async function Home() {
                   broader audience.
                 </p>
                 <p className="leading-7 [&:not(:first-child)]:mt-6">
-                  Whether you're an indie developer or a seasoned creator, our
-                  community is here to help you shine.
+                  Whether you&apos;re an indie developer or a seasoned creator,
+                  our community is here to help you shine.
                 </p>
               </CardContent>
               <CardFooter className="flex flex-row justify-end gap-2">

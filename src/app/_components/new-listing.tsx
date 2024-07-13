@@ -56,7 +56,7 @@ export default function NewListing() {
 
   return (
     <main className="flex w-full flex-col items-center justify-center">
-      <div className="w-full max-w-screen-lg">
+      <div className="w-full max-w-screen-lg flex-col space-y-4">
         <Button variant={"link"} onClick={() => router.back()}>
           <ArrowLeft size={14} className="mr-2 h-4 w-4" />
           Back
