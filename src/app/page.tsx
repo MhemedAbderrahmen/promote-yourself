@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -9,7 +10,6 @@ import { api, HydrateClient } from "~/trpc/server";
 import Listings from "./_components/listings";
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
-
   void api.listings.getAll.prefetch();
 
   return (
@@ -36,8 +36,12 @@ export default async function Home() {
                 </p>
               </CardContent>
               <CardFooter className="flex flex-row justify-end gap-2">
-                <Button variant={"link"}>Explore Now</Button>
-                <Button>Submit Your App</Button>
+                <Link href={"/"}>
+                  <Button variant={"link"}>Explore Now</Button>
+                </Link>
+                <Link href={"/submit-listing"}>
+                  <Button>Submit Your App</Button>
+                </Link>
               </CardFooter>
             </Card>
 
