@@ -1,10 +1,13 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   index,
+  integer,
+  pgTable,
   pgTableCreator,
+  primaryKey,
   serial,
   timestamp,
   varchar,
@@ -62,3 +65,40 @@ export const categories = createTable("categories", {
     () => new Date(),
   ),
 });
+
+export const listingsToCategories = pgTable(
+  "listings_to_categories",
+  {
+    listingId: integer("listing_id")
+      .notNull()
+      .references(() => listings.id),
+    categoryId: integer("category_id")
+      .notNull()
+      .references(() => categories.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.listingId, t.categoryId] }),
+  }),
+);
+
+export const listingsToCategoriesRelations = relations(
+  listingsToCategories,
+  ({ one }) => ({
+    categories: one(categories, {
+      fields: [listingsToCategories.categoryId],
+      references: [categories.id],
+    }),
+    listings: one(listings, {
+      fields: [listingsToCategories.listingId],
+      references: [listings.id],
+    }),
+  }),
+);
+
+export const listingsRelations = relations(listings, ({ many }) => ({
+  listingsToCategories: many(listingsToCategories),
+}));
+
+export const categoriesRelations = relations(categories, ({ many }) => ({
+  listingsToCategories: many(listingsToCategories),
+}));
