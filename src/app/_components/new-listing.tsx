@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -21,6 +21,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
+import { api } from "~/trpc/react";
 import { UploadButton } from "~/utils/uploadthing";
 
 const formSchema = z.object({
@@ -31,6 +32,7 @@ const formSchema = z.object({
 
 export default function NewListing() {
   const router = useRouter();
+  const utils = api.useUtils();
   const [logoExist, setLogoExist] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,10 +43,15 @@ export default function NewListing() {
     },
   });
 
+  const createListing = api.listings.create.useMutation({
+    onSuccess: async () => {
+      await utils.listings.invalidate();
+      router.push("/");
+    },
+  });
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    createListing.mutate(values);
   }
 
   return (
@@ -133,7 +140,14 @@ export default function NewListing() {
               />
             </div>
             <div className="flex w-full justify-center sm:justify-end">
-              <Button type="submit" className="w-full md:w-auto">
+              <Button
+                type="submit"
+                className="w-full md:w-auto"
+                disabled={createListing.isPending}
+              >
+                {createListing.isPending && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
                 Submit
               </Button>
             </div>

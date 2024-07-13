@@ -27,29 +27,25 @@ export const posts = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
+      () => new Date(),
     ),
   },
   (example) => ({
     nameIndex: index("name_idx").on(example.name),
-  })
+  }),
 );
 
+export const listings = createTable("listings", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 256 }),
+  description: varchar("description", { length: 256 }),
+  logo: varchar("logo", { length: 256 }),
+  path: varchar("path", { length: 256 }),
 
-export const listings = createTable(
-  "listings",
-  {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
-    description: varchar("description", { length: 256 }),
-    logo: varchar("logo", { length: 256 }),
-    path: varchar("logo", { length: 256 }),
-
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
-  },
-);
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});

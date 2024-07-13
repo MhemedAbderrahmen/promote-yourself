@@ -5,9 +5,13 @@ import { listings } from "~/server/db/schema";
 
 export const listingsRouter = createTRPCRouter({
   create: publicProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .input(z.object({ description: z.string().min(1) }))
-    .input(z.object({ logo: z.string().min(1) }))
+    .input(
+      z.object({
+        name: z.string().min(2).max(50),
+        description: z.string().min(2).max(50),
+        logo: z.string().min(2),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(listings).values({
         name: input.name,
