@@ -13,7 +13,7 @@ export const AddListing: React.FC = () => {
         height={480}
         width={480}
         src={
-          "https://utfs.io/f/15f130fd-4449-4e99-94ac-e4bd26ba0530-hfic2e.jpg"
+          "https://utfs.io/f/61a179be-d20e-41a7-9e09-0a2d2409793e-543gw0.jpg"
         }
         alt="logo"
       />
