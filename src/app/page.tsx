@@ -36,9 +36,6 @@ export default async function Home() {
                 </p>
               </CardContent>
               <CardFooter className="flex flex-row justify-end gap-2">
-                <Link href={"/"}>
-                  <Button variant={"link"}>Explore Now</Button>
-                </Link>
                 <Link href={"/submit-listing"}>
                   <Button>Submit Your App</Button>
                 </Link>
