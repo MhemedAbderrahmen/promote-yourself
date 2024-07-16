@@ -20,6 +20,13 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { Textarea } from "~/components/ui/textarea";
 import { api } from "~/trpc/react";
 import { UploadButton } from "~/utils/uploadthing";
@@ -28,9 +35,12 @@ const formSchema = z.object({
   name: z.string().min(2).max(50),
   description: z.string().min(2).max(50),
   logo: z.string().min(2),
+  categoryId: z.string(),
 });
 
 export default function NewListing() {
+  const [categories] = api.categories.getAll.useSuspenseQuery();
+
   const router = useRouter();
   const utils = api.useUtils();
   const [logoExist, setLogoExist] = useState<boolean>(false);
@@ -40,6 +50,7 @@ export default function NewListing() {
       name: "",
       description: "",
       logo: "",
+      categoryId: "",
     },
   });
 
@@ -51,7 +62,8 @@ export default function NewListing() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createListing.mutate(values);
+    console.log("🚀 ~ onSubmit ~ values:", parseInt(values.categoryId));
+    // createListing.mutate(values);
   }
 
   return (
@@ -66,7 +78,7 @@ export default function NewListing() {
           <span className="font-bold">
             Promote
             <span className="text-green-500">Thing</span>
-          </span>{" "}
+          </span>
           team wil carefully examine it and respond with the appropriate
           response, good luck! 🔥
         </p>
@@ -82,12 +94,13 @@ export default function NewListing() {
                     <Input placeholder="Listing name" {...field} />
                   </FormControl>
                   <FormDescription>
-                    This is your public display name.
+                    This is your app&apos;s public display name.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="description"
@@ -104,6 +117,37 @@ export default function NewListing() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your app category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map((category, index) => (
+                          <SelectItem
+                            value={category.id.toString()}
+                            key={index}
+                          >
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription>
+                    This is your app&apos;s category
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div
               className={
                 "flex w-full flex-col items-center justify-center space-y-4"

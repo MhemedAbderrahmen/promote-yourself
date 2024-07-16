@@ -4,10 +4,7 @@
 import { relations, sql } from "drizzle-orm";
 import {
   index,
-  integer,
-  pgTable,
   pgTableCreator,
-  primaryKey,
   serial,
   timestamp,
   varchar,
@@ -44,6 +41,7 @@ export const listings = createTable("listings", {
   description: varchar("description", { length: 256 }),
   logo: varchar("logo", { length: 256 }),
   path: varchar("path", { length: 256 }),
+  categoryId: serial("categoryId"),
 
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
@@ -66,39 +64,13 @@ export const categories = createTable("categories", {
   ),
 });
 
-export const listingsToCategories = pgTable(
-  "listings_to_categories",
-  {
-    listingId: integer("listing_id")
-      .notNull()
-      .references(() => listings.id),
-    categoryId: integer("category_id")
-      .notNull()
-      .references(() => categories.id),
-  },
-  (t) => ({
-    pk: primaryKey({ columns: [t.listingId, t.categoryId] }),
-  }),
-);
-
-export const listingsToCategoriesRelations = relations(
-  listingsToCategories,
-  ({ one }) => ({
-    categories: one(categories, {
-      fields: [listingsToCategories.categoryId],
-      references: [categories.id],
-    }),
-    listings: one(listings, {
-      fields: [listingsToCategories.listingId],
-      references: [listings.id],
-    }),
-  }),
-);
-
-export const listingsRelations = relations(listings, ({ many }) => ({
-  listingsToCategories: many(listingsToCategories),
+export const categoriesRelations = relations(listings, ({ many }) => ({
+  listings: many(listings),
 }));
 
-export const categoriesRelations = relations(categories, ({ many }) => ({
-  listingsToCategories: many(listingsToCategories),
-}));
+// export const listingsRelations = relations(listings, ({ one }) => ({
+//   category: one(listings, {
+//     fields: [listings.categoryId],
+//     references: [categories.id],
+//   }),
+// }));

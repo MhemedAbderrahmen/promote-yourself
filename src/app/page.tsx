@@ -11,6 +11,7 @@ import Listings from "./_components/listings";
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
   void api.listings.getAll.prefetch();
+  void api.categories.getAll.prefetch();
 
   return (
     <HydrateClient>

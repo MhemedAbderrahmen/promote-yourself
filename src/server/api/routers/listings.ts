@@ -10,6 +10,7 @@ export const listingsRouter = createTRPCRouter({
         name: z.string().min(2).max(50),
         description: z.string().min(2).max(50),
         logo: z.string().min(2),
+        categoryId: z.coerce.number(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -17,6 +18,7 @@ export const listingsRouter = createTRPCRouter({
         name: input.name,
         logo: input.logo,
         description: input.description,
+        categoryId: input.categoryId,
       });
     }),
 
